@@ -1,0 +1,18 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    tools:context="com.bnj.indoormap.NewBuildingActivity"
+    tools:ignore="MergeRootFrame">
+
+    <fragment
+        android:id="@+id/newBuildingFragment"
+        android:name="com.bnj.indoormap.NewBuildingFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_new_building" />
+
+</FrameLayout>

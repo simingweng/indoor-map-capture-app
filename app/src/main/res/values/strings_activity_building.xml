@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="signin">Sign In</string>
+    <string name="signout">Sign Out</string>
+    <string name="empty_not_sign_in">Please sign in first</string>
+    <string name="empty_buildings">No buildings</string>
+    <string name="reload_error">Error in contacting server. Try again later</string>
+
+</resources>
