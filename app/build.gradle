@@ -27,5 +27,5 @@ dependencies {
     compile 'com.google.android.gms:play-services:+'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
     compile 'com.nostra13.universalimageloader:universal-image-loader:+'
-    compile project(':indoortmsclient')
+    compile 'com.bnj.indoortmsclient:indoortmsclient:+'
 }

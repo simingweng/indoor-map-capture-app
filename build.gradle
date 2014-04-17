@@ -11,5 +11,9 @@ buildscript {
 allprojects {
     repositories {
         mavenCentral()
+        maven {
+            url "file:////var/tmp/myrepo/android"
+            artifactUrls mavenLocal()
+        }
     }
 }
