@@ -1,6 +1,7 @@
 package com.bnj.indoormap;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
@@ -15,7 +16,7 @@ import android.view.MenuItem;
  * This activity is mostly just a 'shell' activity containing nothing more than
  * a {@link BuildingDetailFragment}.
  */
-public class BuildingDetailActivity extends FragmentActivity {
+public class BuildingDetailActivity extends FragmentActivity implements BuildingInfoFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,8 @@ public class BuildingDetailActivity extends FragmentActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(BuildingDetailFragment.ARG_ITEM_ID, getIntent()
-                    .getStringExtra(BuildingDetailFragment.ARG_ITEM_ID));
+            arguments.putString(BuildingDetailFragment.ARG_BUILDING_ID, getIntent()
+                    .getStringExtra(BuildingDetailFragment.ARG_BUILDING_ID));
             BuildingDetailFragment fragment = new BuildingDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
@@ -63,5 +64,10 @@ public class BuildingDetailActivity extends FragmentActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

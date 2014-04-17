@@ -2,6 +2,9 @@ package com.bnj.indoormap;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +19,8 @@ public class BuildingDetailFragment extends Fragment {
      * The fragment argument representing the item ID that this fragment
      * represents.
      */
-    public static final String ARG_ITEM_ID = "item_id";
+    public static final String ARG_BUILDING_ID = "building_id";
+    private String buildingId;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -29,10 +33,11 @@ public class BuildingDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
+        if (getArguments().containsKey(ARG_BUILDING_ID)) {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
+            buildingId = getArguments().getString(ARG_BUILDING_ID);
         }
     }
 
@@ -41,7 +46,47 @@ public class BuildingDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_building_detail,
                 container, false);
+        ViewPager pager = (ViewPager) rootView.findViewById(R.id.pager);
+        if (pager != null) {
+            pager.setAdapter(new BuildingDetailPagerAdapter(getChildFragmentManager()));
+        }
 
         return rootView;
+    }
+
+    private class BuildingDetailPagerAdapter extends FragmentPagerAdapter {
+
+        public BuildingDetailPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    //TODO return the floor list fragment
+                    return BuildingInfoFragment.newInstance(buildingId, null);
+                case 1:
+                    //TODO return the building info fragment
+                    break;
+            }
+            return null;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Info";
+                case 1:
+                    break;
+            }
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return 1;
+        }
     }
 }

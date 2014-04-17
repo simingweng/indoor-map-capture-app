@@ -70,7 +70,7 @@ public class BuildingListFragment extends ListFragment implements Reloadable,
      * The fragment's current callback object, which is notified of list item
      * clicks.
      */
-    private Callbacks mCallbacks = sDummyCallbacks;
+    private Callbacks mCallbacks;
 
     /**
      * The current activated item position. Only used on tablets.
@@ -89,18 +89,8 @@ public class BuildingListFragment extends ListFragment implements Reloadable,
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(String id);
+        public void onItemSelected(String buildingId);
     }
-
-    /**
-     * A dummy implementation of the {@link Callbacks} interface that does
-     * nothing. Used only when this fragment is not attached to an activity.
-     */
-    private static Callbacks sDummyCallbacks = new Callbacks() {
-        @Override
-        public void onItemSelected(String id) {
-        }
-    };
 
     private SpiceManager spiceManager = new SpiceManager(
             GsonGoogleHttpClientSpiceService.class);
@@ -150,7 +140,8 @@ public class BuildingListFragment extends ListFragment implements Reloadable,
                         // set the pull down distance to 25% of the view height
                 .options(
                         Options.create().scrollDistance(0.25f)
-                                .refreshOnUp(true).noMinimize().build())
+                                .refreshOnUp(true).noMinimize().build()
+                )
                         // a pull down refresh force a request through the network
                 .listener(new OnRefreshListener() {
 
@@ -199,7 +190,7 @@ public class BuildingListFragment extends ListFragment implements Reloadable,
         super.onDetach();
 
         // Reset the active callbacks interface to the dummy implementation.
-        mCallbacks = sDummyCallbacks;
+        mCallbacks = null;
     }
 
     /*
@@ -313,7 +304,8 @@ public class BuildingListFragment extends ListFragment implements Reloadable,
                             return true;
                         }
 
-                    });
+                    }
+            );
         } else {
             getListView().setOnItemLongClickListener(null);
         }
@@ -322,7 +314,8 @@ public class BuildingListFragment extends ListFragment implements Reloadable,
         // CHOICE_MODE_MULTIPLE_MODAL
         getListView().setChoiceMode(
                 activatedOnClick ? ListView.CHOICE_MODE_SINGLE
-                        : ListView.CHOICE_MODE_MULTIPLE_MODAL);
+                        : ListView.CHOICE_MODE_MULTIPLE_MODAL
+        );
     }
 
     private void setActivatedPosition(int position) {
@@ -397,7 +390,8 @@ public class BuildingListFragment extends ListFragment implements Reloadable,
                             mPullToRefreshLayout.setRefreshComplete();
                         }
 
-                    });
+                    }
+            );
         }
     }
 

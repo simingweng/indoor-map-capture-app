@@ -65,13 +65,13 @@ public class BuildingListActivity extends FragmentActivity implements
      * that the item with the given ID was selected.
      */
     @Override
-    public void onItemSelected(String id) {
+    public void onItemSelected(String buildingId) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(BuildingDetailFragment.ARG_ITEM_ID, id);
+            arguments.putString(BuildingDetailFragment.ARG_BUILDING_ID, buildingId);
             BuildingDetailFragment fragment = new BuildingDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
@@ -81,7 +81,7 @@ public class BuildingListActivity extends FragmentActivity implements
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, BuildingDetailActivity.class);
-            detailIntent.putExtra(BuildingDetailFragment.ARG_ITEM_ID, id);
+            detailIntent.putExtra(BuildingDetailFragment.ARG_BUILDING_ID, buildingId);
             startActivity(detailIntent);
         }
     }

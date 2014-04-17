@@ -46,7 +46,6 @@ public class NewBuildingFragment extends Fragment {
     private static final String ADDRESS_EXTRA_KEY = "com.bnj.google.map.placesearch.library.extra.PLACE";
     private static final String PLACE_REFERENCE_EXTRA_KEY = "com.bnj.google.map.placesearch.extra.REFERENCE";
     private static final String INITIAL_LOCATION_EXTRA_KEY = "com.bnj.google.map.placesearch.library.extra.INITIAL_LOCATION";
-    private static final String staticMapBaseUrl = "http://maps.googleapis.com/maps/api/staticmap?center=%f,%f&zoom=18&size=540x480&markers=%f,%f&sensor=true&key=AIzaSyDpryIy62fGHzSSFjnYlsVTXTTWEm1aZ6c";
     private static final String streetViewImageBaseUrl = "http://maps.googleapis.com/maps/api/streetview?size=540x480&location=%f,%f&sensor=true&key=AIzaSyDpryIy62fGHzSSFjnYlsVTXTTWEm1aZ6c";
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -182,6 +181,7 @@ public class NewBuildingFragment extends Fragment {
                     }
 
                 });
+                getActivity().finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
