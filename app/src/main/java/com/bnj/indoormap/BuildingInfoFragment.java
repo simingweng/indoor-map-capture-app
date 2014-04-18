@@ -24,7 +24,7 @@ import com.octo.android.robospice.request.listener.RequestListener;
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link BuildingInfoFragment.OnFragmentInteractionListener} interface
+ * {@link com.bnj.indoormap.BuildingInfoFragment.OnBuildingInfoInteractionListener} interface
  * to handle interaction events.
  * Use the {@link BuildingInfoFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -33,17 +33,9 @@ public class BuildingInfoFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = BuildingInfoFragment.class.getName();
-    private static final String staticMapBaseUrl = "http://maps.googleapis.com/maps/api/staticmap?center=%f,%f&zoom=18&size=540x480&markers=%f,%f&sensor=true&key=AIzaSyDpryIy62fGHzSSFjnYlsVTXTTWEm1aZ6c";
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
-    private SpiceManager spiceManager = new SpiceManager(GsonGoogleHttpClientSpiceService.class);
+    private static final String staticMapBaseUrl = "http://maps.googleapis" +
+            ".com/maps/api/staticmap?center=%f,%f&zoom=18&size=540x480&markers=%f," +
+            "%f&sensor=true&key=AIzaSyDpryIy62fGHzSSFjnYlsVTXTTWEm1aZ6c";
     private RequestListener<Building> listener = new RequestListener<Building>() {
 
         @Override
@@ -58,38 +50,42 @@ public class BuildingInfoFragment extends Fragment {
             TextView address = (TextView) getView().findViewById(R.id.textViewAddress);
             address.setText(building.getFormatted_address());
             ImageView image = (ImageView) getView().findViewById(R.id.imageView);
-            ImageLoader.getInstance().displayImage(String.format(staticMapBaseUrl, building.getLocation().lat, building.getLocation().lng, building.getLocation().lat, building.getLocation().lng), image);
+            ImageLoader.getInstance().displayImage(String.format(staticMapBaseUrl,
+                    building.getLocation().lat, building.getLocation().lng,
+                    building.getLocation().lat, building.getLocation().lng), image);
         }
     };
+    private static final String ARG_BUILDING_ID = "param1";
+    // TODO: Rename and change types of parameters
+    private String buildingId;
+    private OnBuildingInfoInteractionListener mListener;
+    private SpiceManager spiceManager = new SpiceManager(GsonGoogleHttpClientSpiceService.class);
+
+    public BuildingInfoFragment() {
+        // Required empty public constructor
+    }
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param buildingId Parameter 1.
      * @return A new instance of fragment BuildingInfoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BuildingInfoFragment newInstance(String param1, String param2) {
+    public static BuildingInfoFragment newInstance(String buildingId) {
         BuildingInfoFragment fragment = new BuildingInfoFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_BUILDING_ID, buildingId);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public BuildingInfoFragment() {
-        // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            buildingId = getArguments().getString(ARG_BUILDING_ID);
         }
         spiceManager.start(getActivity());
     }
@@ -105,7 +101,7 @@ public class BuildingInfoFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (OnBuildingInfoInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -115,9 +111,10 @@ public class BuildingInfoFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (mParam1 != null) {
-            GetBuildingByIdRequest request = new GetBuildingByIdRequest(mParam1);
-            spiceManager.execute(request, request.getCacheKey(), DurationInMillis.ONE_HOUR, listener);
+        if (buildingId != null) {
+            GetBuildingByIdRequest request = new GetBuildingByIdRequest(buildingId);
+            spiceManager.execute(request, request.getCacheKey(), DurationInMillis.ONE_HOUR,
+                    listener);
         }
     }
 
@@ -125,6 +122,12 @@ public class BuildingInfoFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        spiceManager.shouldStop();
+        super.onDestroy();
     }
 
     /**
@@ -137,15 +140,9 @@ public class BuildingInfoFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnBuildingInfoInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
-    }
-
-    @Override
-    public void onDestroy() {
-        spiceManager.shouldStop();
-        super.onDestroy();
     }
 
 

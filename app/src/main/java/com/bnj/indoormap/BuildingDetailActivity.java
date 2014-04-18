@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
+import com.bnj.indoormap.floor.FloorFragment;
+
 /**
  * An activity representing a single Building detail screen. This activity is
  * only used on handset devices. On tablet-size devices, item details are
@@ -16,7 +18,8 @@ import android.view.MenuItem;
  * This activity is mostly just a 'shell' activity containing nothing more than
  * a {@link BuildingDetailFragment}.
  */
-public class BuildingDetailActivity extends FragmentActivity implements BuildingInfoFragment.OnFragmentInteractionListener {
+public class BuildingDetailActivity extends FragmentActivity implements BuildingInfoFragment
+        .OnBuildingInfoInteractionListener, FloorFragment.OnFloorSelectionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,11 @@ public class BuildingDetailActivity extends FragmentActivity implements Building
 
     @Override
     public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onFloorSelected(String id) {
 
     }
 }

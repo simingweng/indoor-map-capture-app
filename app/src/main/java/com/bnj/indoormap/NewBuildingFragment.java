@@ -42,11 +42,17 @@ public class NewBuildingFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final int SEARCH_PLACE_REQUEST = 0;
-    private static final String SEARCH_PLACE_ACTION = "com.bnj.google.map.placesearch.library.GET_PLACE";
-    private static final String ADDRESS_EXTRA_KEY = "com.bnj.google.map.placesearch.library.extra.PLACE";
-    private static final String PLACE_REFERENCE_EXTRA_KEY = "com.bnj.google.map.placesearch.extra.REFERENCE";
-    private static final String INITIAL_LOCATION_EXTRA_KEY = "com.bnj.google.map.placesearch.library.extra.INITIAL_LOCATION";
-    private static final String streetViewImageBaseUrl = "http://maps.googleapis.com/maps/api/streetview?size=540x480&location=%f,%f&sensor=true&key=AIzaSyDpryIy62fGHzSSFjnYlsVTXTTWEm1aZ6c";
+    private static final String SEARCH_PLACE_ACTION = "com.bnj.google.map.placesearch.library" +
+            ".GET_PLACE";
+    private static final String ADDRESS_EXTRA_KEY = "com.bnj.google.map.placesearch.library.extra" +
+            ".PLACE";
+    private static final String PLACE_REFERENCE_EXTRA_KEY = "com.bnj.google.map.placesearch.extra" +
+            ".REFERENCE";
+    private static final String INITIAL_LOCATION_EXTRA_KEY = "com.bnj.google.map.placesearch" +
+            ".library.extra.INITIAL_LOCATION";
+    private static final String streetViewImageBaseUrl = "http://maps.googleapis" +
+            ".com/maps/api/streetview?size=540x480&location=%f," +
+            "%f&sensor=true&key=AIzaSyDpryIy62fGHzSSFjnYlsVTXTTWEm1aZ6c";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -56,6 +62,10 @@ public class NewBuildingFragment extends Fragment {
             GsonGoogleHttpClientSpiceService.class);
 
     private OnFragmentInteractionListener mListener;
+
+    public NewBuildingFragment() {
+        // Required empty public constructor
+    }
 
     /**
      * Use this factory method to create a new instance of this fragment using
@@ -73,10 +83,6 @@ public class NewBuildingFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public NewBuildingFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -208,7 +214,8 @@ public class NewBuildingFragment extends Fragment {
                         startActivityForResult(intent, SEARCH_PLACE_REQUEST);
                     }
 
-                });
+                }
+        );
     }
 
     /*
@@ -244,7 +251,8 @@ public class NewBuildingFragment extends Fragment {
                     ImageLoader.getInstance().displayImage(
                             String.format(streetViewImageBaseUrl,
                                     address.getLatitude(), address.getLongitude()),
-                            (ImageView) getView().findViewById(R.id.mapButton));
+                            (ImageView) getView().findViewById(R.id.mapButton)
+                    );
                 }
                 break;
         }

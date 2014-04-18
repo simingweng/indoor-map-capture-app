@@ -2,6 +2,7 @@ package com.bnj.indoormap;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.bnj.indoormap.floor.FloorFragment;
 import com.bnj.indoormap.utils.Constants;
 
 /**
@@ -28,7 +30,8 @@ import com.bnj.indoormap.utils.Constants;
  * selections.
  */
 public class BuildingListActivity extends FragmentActivity implements
-        BuildingListFragment.Callbacks {
+        BuildingListFragment.Callbacks, BuildingInfoFragment.OnBuildingInfoInteractionListener,
+        FloorFragment.OnFloorSelectionListener {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -186,5 +189,15 @@ public class BuildingListActivity extends FragmentActivity implements
             startActivityForResult(intent,
                     Constants.ActivityRequestCode.LOGIN_REQUEST);
         }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onFloorSelected(String id) {
+
     }
 }

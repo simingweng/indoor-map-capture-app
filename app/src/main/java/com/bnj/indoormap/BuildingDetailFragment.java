@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bnj.indoormap.floor.FloorFragment;
+
 /**
  * A fragment representing a single Building detail screen. This fragment is
  * either contained in a {@link BuildingListActivity} in two-pane mode (on
@@ -64,11 +66,11 @@ public class BuildingDetailFragment extends Fragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    //TODO return the floor list fragment
-                    return BuildingInfoFragment.newInstance(buildingId, null);
+                    //return the building info fragment page
+                    return BuildingInfoFragment.newInstance(buildingId);
                 case 1:
-                    //TODO return the building info fragment
-                    break;
+                    //return the building floor list fragment page
+                    return FloorFragment.newInstance(buildingId);
             }
             return null;
         }
@@ -79,14 +81,14 @@ public class BuildingDetailFragment extends Fragment {
                 case 0:
                     return "Info";
                 case 1:
-                    break;
+                    return "Floors";
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 1;
+            return 2;
         }
     }
 }
