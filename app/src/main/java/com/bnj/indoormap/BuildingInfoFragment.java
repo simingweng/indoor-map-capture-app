@@ -50,9 +50,11 @@ public class BuildingInfoFragment extends Fragment {
             TextView address = (TextView) getView().findViewById(R.id.textViewAddress);
             address.setText(building.getFormatted_address());
             ImageView image = (ImageView) getView().findViewById(R.id.imageView);
-            ImageLoader.getInstance().displayImage(String.format(staticMapBaseUrl,
-                    building.getLocation().lat, building.getLocation().lng,
-                    building.getLocation().lat, building.getLocation().lng), image);
+            if (building.getLocation() != null) {
+                ImageLoader.getInstance().displayImage(String.format(staticMapBaseUrl,
+                        building.getLocation().lat, building.getLocation().lng,
+                        building.getLocation().lat, building.getLocation().lng), image);
+            }
         }
     };
     private static final String ARG_BUILDING_ID = "param1";
@@ -113,7 +115,8 @@ public class BuildingInfoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         if (buildingId != null) {
             GetBuildingByIdRequest request = new GetBuildingByIdRequest(buildingId);
-            spiceManager.execute(request, request.getCacheKey(), DurationInMillis.ONE_HOUR,
+            spiceManager.getFromCacheAndLoadFromNetworkIfExpired(request, request.getCacheKey(),
+                    DurationInMillis.ONE_HOUR,
                     listener);
         }
     }
