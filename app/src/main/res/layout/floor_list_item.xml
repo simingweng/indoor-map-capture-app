@@ -20,7 +20,7 @@
         android:layout_toRightOf="@+id/imageView"
         android:padding="16dp"
         android:text="Floor Name"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
+        android:textAppearance="?android:attr/textAppearanceListItem"/>
 
     <TextView
         android:id="@+id/textViewLevel"
@@ -30,5 +30,5 @@
         android:layout_toRightOf="@+id/imageView"
         android:padding="16dp"
         android:text="Level"
-        android:textAppearance="?android:attr/textAppearanceListItem"/>
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
 </RelativeLayout>
