@@ -5,6 +5,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -88,6 +91,7 @@ public class FloorFragment extends ListFragment {
         adapter = new FloorsArrayAdapter(getActivity(), R.layout.floor_list_item,
                 R.id.textViewName, new ArrayList<Floor>());
         setListAdapter(adapter);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -101,6 +105,12 @@ public class FloorFragment extends ListFragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.floor_list_option, menu);
+    }
+
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
@@ -109,6 +119,16 @@ public class FloorFragment extends ListFragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_create_floor:
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
