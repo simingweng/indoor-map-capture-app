@@ -1,12 +1,12 @@
 <FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="fill_parent">
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView"
         android:layout_gravity="center">
 
         <RelativeLayout
@@ -15,60 +15,60 @@
             android:padding="16dp">
 
             <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:scaleType="fitCenter"
-                android:id="@+id/imageView" />
+                android:scaleType="fitCenter"/>
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textAppearance="?android:attr/textAppearanceListItem"
-                android:text="Name"
                 android:id="@+id/textViewNameLabel"
-                android:layout_below="@+id/imageView"
-                android:layout_centerHorizontal="true" />
-
-            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:hint="Building Name"
+                android:layout_below="@+id/imageView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:text="Name"
+                android:textAppearance="?android:attr/textAppearanceListItem"/>
+
+            <TextView
                 android:id="@+id/textViewName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/textViewNameLabel"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="4dp"
+                android:hint="Building Name"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:layout_marginTop="2dp"
+                android:layout_height="2dp"
                 android:layout_below="@id/textViewName"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
                 android:background="?android:attr/listDivider" />
 
             <TextView
+                android:id="@+id/textViewAddressLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Address"
-                android:id="@+id/textViewAddressLabel"
+                android:layout_below="@+id/textViewName"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@+id/textViewName" />
+                android:layout_marginTop="16dp"
+                android:text="Address"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
 
             <TextView
+                android:id="@+id/textViewAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:hint="Formatted Address"
-                android:id="@+id/textViewAddress"
                 android:layout_below="@+id/textViewAddressLabel"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="4dp"
+                android:hint="Formatted Address"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
 
 
         </RelativeLayout>
