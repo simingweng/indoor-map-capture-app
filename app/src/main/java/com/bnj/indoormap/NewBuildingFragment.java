@@ -42,17 +42,7 @@ public class NewBuildingFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final int SEARCH_PLACE_REQUEST = 0;
-    private static final String SEARCH_PLACE_ACTION = "com.bnj.google.map.placesearch.library" +
-            ".GET_PLACE";
-    private static final String ADDRESS_EXTRA_KEY = "com.bnj.google.map.placesearch.library.extra" +
-            ".PLACE";
-    private static final String PLACE_REFERENCE_EXTRA_KEY = "com.bnj.google.map.placesearch.extra" +
-            ".REFERENCE";
-    private static final String INITIAL_LOCATION_EXTRA_KEY = "com.bnj.google.map.placesearch" +
-            ".library.extra.INITIAL_LOCATION";
-    private static final String streetViewImageBaseUrl = "http://maps.googleapis" +
-            ".com/maps/api/streetview?size=540x480&location=%f," +
-            "%f&sensor=true&key=AIzaSyDpryIy62fGHzSSFjnYlsVTXTTWEm1aZ6c";
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -158,7 +148,7 @@ public class NewBuildingFragment extends Fragment {
                 newBuilding.setName(address.getFeatureName());
                 newBuilding.setFormatted_address(address.getAddressLine(0));
                 newBuilding.setReference(address.getExtras().getString(
-                        PLACE_REFERENCE_EXTRA_KEY));
+                        Constants.PlaceSearch.PLACE_REFERENCE_EXTRA_KEY));
                 Location location = new Location();
                 location.lat = address.getLatitude();
                 location.lng = address.getLongitude();
@@ -207,9 +197,10 @@ public class NewBuildingFragment extends Fragment {
 
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(SEARCH_PLACE_ACTION);
+                        Intent intent = new Intent(Constants.PlaceSearch.SEARCH_PLACE_ACTION);
                         if (address != null) {
-                            intent.putExtra(INITIAL_LOCATION_EXTRA_KEY, address);
+                            intent.putExtra(Constants.PlaceSearch.INITIAL_LOCATION_EXTRA_KEY,
+                                    address);
                         }
                         startActivityForResult(intent, SEARCH_PLACE_REQUEST);
                     }
@@ -230,7 +221,7 @@ public class NewBuildingFragment extends Fragment {
         switch (requestCode) {
             case SEARCH_PLACE_REQUEST:
                 if (resultCode == Activity.RESULT_OK) {
-                    address = data.getParcelableExtra(ADDRESS_EXTRA_KEY);
+                    address = data.getParcelableExtra(Constants.PlaceSearch.ADDRESS_EXTRA_KEY);
                     EditText name = (EditText) getView().findViewById(
                             R.id.editTextName);
                     name.setText(address.getFeatureName());
@@ -249,7 +240,7 @@ public class NewBuildingFragment extends Fragment {
                     // map image to show in the image button view. Here we use the
                     // Universal Image Loader library for querying and loading it
                     ImageLoader.getInstance().displayImage(
-                            String.format(streetViewImageBaseUrl,
+                            String.format(Constants.API_URLs.GOOLE_STATIC_MAP_IMAGE,
                                     address.getLatitude(), address.getLongitude()),
                             (ImageView) getView().findViewById(R.id.mapButton)
                     );

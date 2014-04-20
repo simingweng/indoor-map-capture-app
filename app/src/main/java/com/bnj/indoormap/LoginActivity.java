@@ -72,7 +72,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
 
         // Set up the login form.
-        mEmail = getIntent().getStringExtra(Constants.ExtraKeys.USER_NAME);
+        mEmail = getIntent().getStringExtra(Constants.Login.USER_NAME_EXTRA_KEY);
         mEmailView = (EditText) findViewById(R.id.email);
         mEmailView.setText(mEmail);
 
@@ -222,8 +222,8 @@ public class LoginActivity extends Activity {
         public void onRequestSuccess(User arg0) {
             showProgress(false);
             Intent intent = new Intent();
-            intent.putExtra(Constants.ExtraKeys.USER_NAME, mEmail);
-            intent.putExtra(Constants.ExtraKeys.USER_TOKEN, arg0.getToken());
+            intent.putExtra(Constants.Login.USER_NAME_EXTRA_KEY, mEmail);
+            intent.putExtra(Constants.Login.USER_TOKEN_EXTRA_KEY, arg0.getToken());
             setResult(RESULT_OK, intent);
             finish();
         }

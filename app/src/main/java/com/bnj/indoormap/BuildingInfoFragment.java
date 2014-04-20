@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bnj.indoormap.utils.Constants;
 import com.bnj.indoortms.api.client.model.Building;
 import com.bnj.indoortms.api.client.request.GetBuildingByIdRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -33,9 +34,6 @@ public class BuildingInfoFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = BuildingInfoFragment.class.getName();
-    private static final String staticMapBaseUrl = "http://maps.googleapis" +
-            ".com/maps/api/staticmap?center=%f,%f&zoom=18&size=540x480&markers=%f," +
-            "%f&sensor=true&key=AIzaSyDpryIy62fGHzSSFjnYlsVTXTTWEm1aZ6c";
     private RequestListener<Building> listener = new RequestListener<Building>() {
 
         @Override
@@ -51,13 +49,14 @@ public class BuildingInfoFragment extends Fragment {
             address.setText(building.getFormatted_address());
             ImageView image = (ImageView) getView().findViewById(R.id.imageView);
             if (building.getLocation() != null) {
-                ImageLoader.getInstance().displayImage(String.format(staticMapBaseUrl,
+                ImageLoader.getInstance().displayImage(String.format(Constants.API_URLs
+                                .GOOLE_STATIC_MAP_IMAGE,
                         building.getLocation().lat, building.getLocation().lng,
                         building.getLocation().lat, building.getLocation().lng), image);
             }
         }
     };
-    private static final String ARG_BUILDING_ID = "param1";
+    private static final String ARG_BUILDING_ID = "building_id";
     // TODO: Rename and change types of parameters
     private String buildingId;
     private OnBuildingInfoInteractionListener mListener;

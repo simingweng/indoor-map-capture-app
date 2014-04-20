@@ -106,10 +106,10 @@ public class BuildingListActivity extends FragmentActivity implements
                     prefs.edit()
                             .putString(
                                     Constants.PrefsKeys.USER_NAME,
-                                    arg2.getStringExtra(Constants.ExtraKeys.USER_NAME))
+                                    arg2.getStringExtra(Constants.Login.USER_NAME_EXTRA_KEY))
                             .putString(
                                     Constants.PrefsKeys.USER_TOKEN,
-                                    arg2.getStringExtra(Constants.ExtraKeys.USER_TOKEN))
+                                    arg2.getStringExtra(Constants.Login.USER_TOKEN_EXTRA_KEY))
                             .commit();
                     signinItem.setVisible(false);
                     signoutItem.setVisible(true);
@@ -184,7 +184,7 @@ public class BuildingListActivity extends FragmentActivity implements
                 .getString(Constants.PrefsKeys.USER_TOKEN, null);
         if (usertoken == null) {
             Intent intent = new Intent(this, LoginActivity.class);
-            intent.putExtra(Constants.ExtraKeys.USER_NAME,
+            intent.putExtra(Constants.Login.USER_NAME_EXTRA_KEY,
                     prefs.getString(Constants.PrefsKeys.USER_NAME, null));
             startActivityForResult(intent,
                     Constants.ActivityRequestCode.LOGIN_REQUEST);
