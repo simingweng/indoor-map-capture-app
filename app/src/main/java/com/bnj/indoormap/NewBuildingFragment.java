@@ -241,6 +241,7 @@ public class NewBuildingFragment extends Fragment {
                     // Universal Image Loader library for querying and loading it
                     ImageLoader.getInstance().displayImage(
                             String.format(Constants.API_URLs.GOOLE_STATIC_MAP_IMAGE,
+                                    address.getLatitude(), address.getLongitude(),
                                     address.getLatitude(), address.getLongitude()),
                             (ImageView) getView().findViewById(R.id.mapButton)
                     );

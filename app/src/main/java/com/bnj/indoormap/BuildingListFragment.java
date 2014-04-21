@@ -45,6 +45,7 @@ import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.Options;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+import uk.co.senab.actionbarpulltorefresh.library.viewdelegates.ViewDelegate;
 
 /**
  * A list fragment representing a list of Buildings. This fragment also supports
@@ -83,6 +84,7 @@ public class BuildingListFragment extends ListFragment implements Reloadable,
             GsonGoogleHttpClientSpiceService.class);
     private PullToRefreshLayout mPullToRefreshLayout;
     private MenuItem addMenuItem;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -109,6 +111,10 @@ public class BuildingListFragment extends ListFragment implements Reloadable,
             setActivatedPosition(savedInstanceState
                     .getInt(STATE_ACTIVATED_POSITION));
         }
+
+        setEmptyText(getString(R.string.empty_not_sign_in));
+        setListAdapter(buildingAdapter);
+
         // This is the View which is created by ListFragment
         ViewGroup viewGroup = (ViewGroup) view;
 
@@ -121,9 +127,14 @@ public class BuildingListFragment extends ListFragment implements Reloadable,
 
                         // We need to mark the ListView and it's Empty View as pullable
                         // This is because they are not dirent children of the ViewGroup
-                .theseChildrenArePullable(getListView(),
-                        getListView().getEmptyView())
+                .theseChildrenArePullable(getListView(), getListView().getEmptyView())
                         // set the pull down distance to 25% of the view height
+                .useViewDelegate(TextView.class, new ViewDelegate() {
+                    @Override
+                    public boolean isReadyForPull(View view, float v, float v2) {
+                        return true;
+                    }
+                })
                 .options(
                         Options.create().scrollDistance(0.25f)
                                 .refreshOnUp(true).noMinimize().build()
@@ -140,9 +151,6 @@ public class BuildingListFragment extends ListFragment implements Reloadable,
                 })
                         // We can now complete the setup as desired
                 .setup(mPullToRefreshLayout);
-
-        setEmptyText(getString(R.string.empty_not_sign_in));
-        setListAdapter(buildingAdapter);
         /**
          * by default, we assume the fragment to work in a single pane layout,
          * so we set the list view to the standard behavior in

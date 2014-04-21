@@ -79,7 +79,7 @@ public class BuildingDetailFragment extends Fragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Info";
+                    return "Details";
                 case 1:
                     return "Floors";
             }

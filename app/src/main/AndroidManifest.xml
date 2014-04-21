@@ -14,17 +14,17 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name="com.bnj.indoormap.IndoorMapApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:name="IndoorMapApplication">
+        android:theme="@style/AppTheme">
         <activity
             android:name="com.bnj.indoormap.LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateVisible"></activity>
+            android:windowSoftInputMode="adjustResize|stateVisible" />
 
-        <service android:name="com.octo.android.robospice.GsonGoogleHttpClientSpiceService"></service>
+        <service android:name="com.octo.android.robospice.GsonGoogleHttpClientSpiceService" />
 
         <activity
             android:name="com.bnj.indoormap.BuildingListActivity"
@@ -45,7 +45,10 @@
         </activity>
         <activity
             android:name="com.bnj.indoormap.NewBuildingActivity"
-            android:label="@string/title_activity_new_building"></activity>
+            android:label="@string/title_activity_new_building" />
+        <activity
+            android:name="com.bnj.indoormap.floor.NewFloorActivity"
+            android:label="@string/title_activity_new_floor"></activity>
     </application>
 
 </manifest>
