@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="title_activity_new_floor">Create New Floor</string>
+    <string name="title_get_image_from">Take Image From</string>
+    <array name="choice_get_image_from">
+        <item>Take a Photo Using Camera</item>
+        <item>Choose Existing Image</item>
+    </array>
 </resources>

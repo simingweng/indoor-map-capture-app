@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
     package="com.bnj.indoormap"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:versionCode="1"
     android:versionName="1.0">
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="19" />
+        android:targetSdkVersion="19"/>
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:name="com.bnj.indoormap.IndoorMapApplication"
@@ -22,17 +25,17 @@
         <activity
             android:name="com.bnj.indoormap.LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateVisible" />
+            android:windowSoftInputMode="adjustResize|stateVisible"/>
 
-        <service android:name="com.octo.android.robospice.GsonGoogleHttpClientSpiceService" />
+        <service android:name="com.octo.android.robospice.GsonGoogleHttpClientSpiceService"/>
 
         <activity
             android:name="com.bnj.indoormap.BuildingListActivity"
             android:label="@string/title_building_list">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
@@ -41,11 +44,11 @@
             android:parentActivityName="com.bnj.indoormap.BuildingListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.bnj.indoormap.BuildingListActivity" />
+                android:value="com.bnj.indoormap.BuildingListActivity"/>
         </activity>
         <activity
             android:name="com.bnj.indoormap.NewBuildingActivity"
-            android:label="@string/title_activity_new_building" />
+            android:label="@string/title_activity_new_building"/>
         <activity
             android:name="com.bnj.indoormap.floor.NewFloorActivity"
             android:label="@string/title_activity_new_floor"></activity>

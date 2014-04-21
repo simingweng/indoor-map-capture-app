@@ -31,6 +31,8 @@ public interface Constants {
     public static interface ActivityRequestCode {
 
         public static final int LOGIN_REQUEST = 1;
+        public static final int CAPTURE_IMAGE = 2;
+        public static final int GET_EXISTING_IMAGE = 3;
 
     }
 

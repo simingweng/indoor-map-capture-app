@@ -1,7 +1,13 @@
 package com.bnj.indoormap.floor;
 
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,8 +15,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.bnj.indoormap.R;
+import com.bnj.indoormap.utils.Constants;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 
 /**
@@ -27,6 +36,7 @@ public class NewFloorFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Uri image;
 
 
     public NewFloorFragment() {
@@ -92,11 +102,48 @@ public class NewFloorFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case Constants.ActivityRequestCode.CAPTURE_IMAGE:
+            case Constants.ActivityRequestCode.GET_EXISTING_IMAGE:
+                if (resultCode == Activity.RESULT_OK) {
+                    image = data.getData();
+                    ImageLoader.getInstance().displayImage(image.toString(),
+                            (ImageView) getView().findViewById(R.id.imageView));
+                }
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
+
     private class AssignFloorPlanClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.title_get_image_from).setItems(R.array
+                    .choice_get_image_from, new DialogInterface.OnClickListener() {
 
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case 0:
+                            Intent captureImageIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(captureImageIntent, Constants.ActivityRequestCode
+                                    .CAPTURE_IMAGE);
+                            break;
+                        case 1:
+                            Intent getExistingImageIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                            getExistingImageIntent.setType("image/*");
+                            startActivityForResult(getExistingImageIntent,
+                                    Constants.ActivityRequestCode.GET_EXISTING_IMAGE);
+                            break;
+                    }
+                }
+
+            }).create().show();
         }
     }
 
