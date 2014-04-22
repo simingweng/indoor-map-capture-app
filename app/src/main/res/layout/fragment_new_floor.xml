@@ -38,9 +38,10 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/numberPicker"
+                android:layout_below="@+id/buttonFloorPlan"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
+                android:enabled="false"
                 android:text="Geo Reference" />
 
             <TextView
@@ -48,7 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/buttonFloorPlan"
+                android:layout_below="@+id/buttonGeoReference"
                 android:layout_marginTop="16dp"
                 android:text="Name"
                 android:textAppearance="?android:attr/textAppearanceListItem" />
