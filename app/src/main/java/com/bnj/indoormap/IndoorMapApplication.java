@@ -26,8 +26,7 @@ public class IndoorMapApplication extends Application {
                 .considerExifParams(true).cacheOnDisc(true).build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
                 .writeDebugLogs().defaultDisplayImageOptions(options).build();
-        ImageLoader.getInstance().init(config
-        );
+        ImageLoader.getInstance().init(config);
     }
 
 }
