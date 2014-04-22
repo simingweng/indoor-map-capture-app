@@ -69,6 +69,7 @@ public class NewFloorFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         setHasOptionsMenu(true);
+        setRetainInstance(true);
     }
 
     @Override
@@ -85,6 +86,10 @@ public class NewFloorFragment extends Fragment {
                 AssignFloorPlanClickListener());
         view.findViewById(R.id.buttonGeoReference).setOnClickListener(new
                 GeoReferenceClickListener());
+        if (image != null) {
+            ImageLoader.getInstance().displayImage(image.toString(),
+                    (ImageView) getView().findViewById(R.id.imageView));
+        }
     }
 
     @Override
