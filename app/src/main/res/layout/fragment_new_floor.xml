@@ -1,8 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.bnj.indoormap.floor.NewFloorFragment">
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.bnj.indoormap.floor.NewFloorFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -22,37 +22,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"/>
 
             <Button
                 android:id="@+id/buttonFloorPlan"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imageView"
                 android:layout_centerHorizontal="true"
-                android:text="Assign Floor Plan" />
+                android:text="Assign Floor Plan"/>
 
             <Button
                 android:id="@+id/buttonGeoReference"
-                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/buttonFloorPlan"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
                 android:enabled="false"
-                android:text="Geo Reference" />
+                android:text="Geo Reference"/>
 
             <TextView
                 android:id="@+id/textViewName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/buttonGeoReference"
+                android:layout_below="@+id/textViewGeoReferenceState"
                 android:layout_marginTop="16dp"
                 android:text="Name"
-                android:textAppearance="?android:attr/textAppearanceListItem" />
+                android:textAppearance="?android:attr/textAppearanceListItem"/>
 
             <EditText
                 android:id="@+id/editTextName"
@@ -60,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/textViewName" />
+                android:layout_below="@+id/textViewName"/>
 
             <TextView
                 android:id="@+id/textViewLevel"
@@ -71,7 +69,7 @@
                 android:layout_below="@+id/editTextName"
                 android:layout_marginTop="16dp"
                 android:text="Level"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceListItem"/>
 
             <NumberPicker
                 android:id="@+id/numberPicker"
@@ -80,8 +78,16 @@
                 android:layout_alignParentLeft="false"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentStart="false"
-                android:layout_below="@+id/editTextName"
-                android:layout_marginTop="16dp" />
+                android:layout_below="@+id/textViewLevel"
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:id="@+id/textViewGeoReferenceState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/buttonGeoReference"
+                android:layout_centerHorizontal="true"
+                android:textColor="@android:color/holo_green_light"/>
 
         </RelativeLayout>
     </ScrollView>

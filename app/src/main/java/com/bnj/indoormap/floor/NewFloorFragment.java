@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bnj.indoormap.R;
 import com.bnj.indoormap.utils.Constants;
@@ -121,6 +122,8 @@ public class NewFloorFragment extends Fragment {
             case Constants.ActivityRequestCode.GEO_REFERENCE:
                 if (resultCode == Activity.RESULT_OK) {
                     gcps = data.getDoubleArrayExtra(Constants.GeoReference.GCPS_EXTRA_KEY);
+                    ((TextView) getView().findViewById(R.id.textViewGeoReferenceState)).setText(
+                            (gcps.length / 4) + "GCP(s) have been marked");
                 }
                 break;
         }
