@@ -240,7 +240,7 @@ public class NewBuildingFragment extends Fragment {
                     // map image to show in the image button view. Here we use the
                     // Universal Image Loader library for querying and loading it
                     ImageLoader.getInstance().displayImage(
-                            String.format(Constants.API_URLs.GOOLE_STATIC_MAP_IMAGE,
+                            String.format(Constants.GoogleAPI.GOOLE_STATIC_MAP_IMAGE,
                                     address.getLatitude(), address.getLongitude(),
                                     address.getLatitude(), address.getLongitude()),
                             (ImageView) getView().findViewById(R.id.mapButton)

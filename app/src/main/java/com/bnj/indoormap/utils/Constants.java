@@ -25,7 +25,8 @@ public interface Constants {
         /**
          * user token obtained from the last successful sign in
          */
-        public static final String USER_TOKEN_EXTRA_KEY = "com.bnj.indoormap.login.extra.USER_TOKEN_EXTRA_KEY";
+        public static final String USER_TOKEN_EXTRA_KEY = "com.bnj.indoormap.login.extra" +
+                ".USER_TOKEN_EXTRA_KEY";
     }
 
     public static interface ActivityRequestCode {
@@ -33,10 +34,11 @@ public interface Constants {
         public static final int LOGIN_REQUEST = 1;
         public static final int CAPTURE_IMAGE = 2;
         public static final int GET_EXISTING_IMAGE = 3;
+        public static final int GEO_REFERENCE = 4;
 
     }
 
-    public static interface API_URLs {
+    public static interface GoogleAPI {
 
         public static final String GOOLE_STATIC_MAP_IMAGE = "http://maps.googleapis" +
                 ".com/maps/api/staticmap?center=%f,%f&zoom=18&size=540x480&markers=%f," +
@@ -58,6 +60,15 @@ public interface Constants {
                 ".REFERENCE";
         public static final String INITIAL_LOCATION_EXTRA_KEY = "com.bnj.google.map.placesearch" +
                 ".library.extra.INITIAL_LOCATION";
+    }
+
+    public static interface GeoReference {
+        public static final String GCPS_EXTRA_KEY = "com.bnj.imagegeoreferencer.extra" +
+                ".GCP_COLLECTION";
+        public static final String BUILDING_LOCATION_EXTRA_KEY = "com.bnj.imagegeoreferencer" +
+                ".extra.BUILDING_LOCATION";
+        public static final String ACTION_GEO_REFERENCE = "com.bnj.imagegeoreferencer" +
+                ".GEO_REFERENCE";
     }
 
 }

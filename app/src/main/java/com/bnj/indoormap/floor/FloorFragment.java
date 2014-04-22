@@ -17,9 +17,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bnj.indoormap.R;
+import com.bnj.indoormap.utils.Constants;
 import com.bnj.indoortms.api.client.model.Building;
 import com.bnj.indoortms.api.client.model.Floor;
 import com.bnj.indoortms.api.client.request.GetBuildingByIdRequest;
+import com.bnj.indoortms.api.client.utils.FloorImageUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.octo.android.robospice.GsonGoogleHttpClientSpiceService;
 import com.octo.android.robospice.SpiceManager;
@@ -47,6 +49,7 @@ public class FloorFragment extends ListFragment {
 
     // TODO: Rename and change types of parameters
     private String buildingId;
+    private double[] buildingLocation;
     private SpiceManager spiceManager = new SpiceManager(GsonGoogleHttpClientSpiceService.class);
     private FloorsArrayAdapter adapter;
     private RequestListener<Building> floorsRequestListener = new RequestListener<Building>() {
@@ -58,6 +61,7 @@ public class FloorFragment extends ListFragment {
 
         @Override
         public void onRequestSuccess(Building building) {
+            buildingLocation = new double[]{building.getLocation().lat, building.getLocation().lng};
             if (adapter != null) {
                 adapter.clear();
                 adapter.addAll(building.getFloors());
@@ -127,6 +131,8 @@ public class FloorFragment extends ListFragment {
         switch (item.getItemId()) {
             case R.id.action_create_floor:
                 Intent intent = new Intent(getActivity(), NewFloorActivity.class);
+                intent.putExtra(Constants.GeoReference.BUILDING_LOCATION_EXTRA_KEY,
+                        buildingLocation);
                 startActivity(intent);
                 break;
         }
@@ -183,11 +189,10 @@ public class FloorFragment extends ListFragment {
             View v = super.getView(position, convertView, parent);
             ImageView image = (ImageView) v.findViewById(R.id.imageView);
             TextView level = (TextView) v.findViewById(R.id.textViewLevel);
-            String url = "http://192.168.1.182/%s/%s/%s";
             Floor floor = adapter.getItem(position);
             level.setText("Level " + floor.getLevel());
-            ImageLoader.getInstance().displayImage(String.format(url, buildingId, floor.get_id(),
-                    floor.getImage()), image);
+            ImageLoader.getInstance().displayImage(FloorImageUtil.getInstance().getImageUrl
+                    (buildingId, floor.get_id(), floor.getImage()), image);
             return v;
         }
     }

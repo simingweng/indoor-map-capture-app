@@ -49,10 +49,10 @@ public class BuildingInfoFragment extends Fragment {
             address.setText(building.getFormatted_address());
             ImageView image = (ImageView) getView().findViewById(R.id.imageView);
             if (building.getLocation() != null) {
-                ImageLoader.getInstance().displayImage(String.format(Constants.API_URLs
-                                .GOOLE_STATIC_MAP_IMAGE,
-                        building.getLocation().lat, building.getLocation().lng,
-                        building.getLocation().lat, building.getLocation().lng), image);
+                ImageLoader.getInstance().displayImage(String.format(Constants.GoogleAPI
+                                .GOOGLE_STREETVIEW_IMAGE,
+                        building.getLocation().lat, building.getLocation().lng
+                ), image);
             }
         }
     };

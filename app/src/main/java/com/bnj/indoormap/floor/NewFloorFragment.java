@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bnj.indoormap.R;
@@ -30,13 +31,13 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class NewFloorFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_BUILDING_LOCATION = "building_location";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private double[] buildingLocation;
     private Uri image;
+    private Button geoReferenceButton;
+    private double[] gcps;
 
 
     public NewFloorFragment() {
@@ -47,16 +48,14 @@ public class NewFloorFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param buildingLocation geo coordinates of the building location.
      * @return A new instance of fragment NewFloorFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static NewFloorFragment newInstance(String param1, String param2) {
+    public static NewFloorFragment newInstance(double[] buildingLocation) {
         NewFloorFragment fragment = new NewFloorFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putDoubleArray(ARG_BUILDING_LOCATION, buildingLocation);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,8 +64,7 @@ public class NewFloorFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            buildingLocation = getArguments().getDoubleArray(ARG_BUILDING_LOCATION);
         }
         setHasOptionsMenu(true);
         setRetainInstance(true);
@@ -84,11 +82,12 @@ public class NewFloorFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         view.findViewById(R.id.buttonFloorPlan).setOnClickListener(new
                 AssignFloorPlanClickListener());
-        view.findViewById(R.id.buttonGeoReference).setOnClickListener(new
-                GeoReferenceClickListener());
+        geoReferenceButton = (Button) view.findViewById(R.id.buttonGeoReference);
+        geoReferenceButton.setOnClickListener(new GeoReferenceClickListener());
         if (image != null) {
             ImageLoader.getInstance().displayImage(image.toString(),
                     (ImageView) getView().findViewById(R.id.imageView));
+            geoReferenceButton.setEnabled(true);
         }
     }
 
@@ -114,8 +113,14 @@ public class NewFloorFragment extends Fragment {
             case Constants.ActivityRequestCode.GET_EXISTING_IMAGE:
                 if (resultCode == Activity.RESULT_OK) {
                     image = data.getData();
+                    geoReferenceButton.setEnabled(true);
                     ImageLoader.getInstance().displayImage(image.toString(),
                             (ImageView) getView().findViewById(R.id.imageView));
+                }
+                break;
+            case Constants.ActivityRequestCode.GEO_REFERENCE:
+                if (resultCode == Activity.RESULT_OK) {
+                    gcps = data.getDoubleArrayExtra(Constants.GeoReference.GCPS_EXTRA_KEY);
                 }
                 break;
         }
@@ -156,7 +161,10 @@ public class NewFloorFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-
+            Intent intent = new Intent(Constants.GeoReference.ACTION_GEO_REFERENCE, image);
+            intent.putExtra(Constants.GeoReference.BUILDING_LOCATION_EXTRA_KEY, buildingLocation);
+            intent.putExtra(Constants.GeoReference.GCPS_EXTRA_KEY, gcps);
+            startActivityForResult(intent, Constants.ActivityRequestCode.GEO_REFERENCE);
         }
     }
 }
