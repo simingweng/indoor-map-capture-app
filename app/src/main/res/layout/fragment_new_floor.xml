@@ -15,14 +15,17 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true"
             android:padding="16dp">
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="240dp"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true"
+                android:scaleType="fitCenter"/>
 
             <Button
                 android:id="@+id/buttonFloorPlan"
@@ -59,7 +62,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_below="@+id/textViewName"/>
 
             <TextView
@@ -67,7 +69,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_below="@+id/editTextName"
                 android:layout_marginTop="16dp"
                 android:text="Level"
@@ -77,9 +78,7 @@
                 android:id="@+id/numberPicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="false"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentStart="false"
                 android:layout_below="@+id/textViewLevel"
                 android:layout_marginTop="16dp"/>
 
