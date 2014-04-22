@@ -30,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imageView"
                 android:layout_centerHorizontal="true"
+                android:drawableLeft="@drawable/ic_action_assign_floor_plan"
                 android:text="Assign Floor Plan"/>
 
             <Button
@@ -39,6 +40,7 @@
                 android:layout_below="@+id/buttonFloorPlan"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
+                android:drawableLeft="@drawable/ic_action_geo_reference"
                 android:enabled="false"
                 android:text="Geo Reference"/>
 
