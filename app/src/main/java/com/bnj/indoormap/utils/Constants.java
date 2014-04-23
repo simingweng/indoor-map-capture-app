@@ -71,4 +71,9 @@ public interface Constants {
                 ".GEO_REFERENCE";
     }
 
+    public static interface CreateNewFloor {
+        public static final String BUILDING_ID_EXTRA_KEY = "com.bnj.indoormap.floor.extra" +
+                ".BUILDING_ID";
+    }
+
 }

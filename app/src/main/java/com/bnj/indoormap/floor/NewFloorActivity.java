@@ -19,7 +19,9 @@ public class NewFloorActivity extends FragmentActivity {
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentByTag(NEW_FLOOR_FRAGMENT_TAG);
         if (fragment == null) {
-            fragment = NewFloorFragment.newInstance(getIntent().getDoubleArrayExtra(Constants
+            fragment = NewFloorFragment.newInstance(getIntent().getStringExtra(Constants
+                    .CreateNewFloor.BUILDING_ID_EXTRA_KEY), getIntent().getDoubleArrayExtra
+                    (Constants
                     .GeoReference.BUILDING_LOCATION_EXTRA_KEY));
         }
         fm.beginTransaction().replace(R.id.frame_container, fragment,

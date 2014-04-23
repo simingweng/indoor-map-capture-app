@@ -131,6 +131,7 @@ public class FloorFragment extends ListFragment {
         switch (item.getItemId()) {
             case R.id.action_create_floor:
                 Intent intent = new Intent(getActivity(), NewFloorActivity.class);
+                intent.putExtra(Constants.CreateNewFloor.BUILDING_ID_EXTRA_KEY, buildingId);
                 intent.putExtra(Constants.GeoReference.BUILDING_LOCATION_EXTRA_KEY,
                         buildingLocation);
                 startActivity(intent);
