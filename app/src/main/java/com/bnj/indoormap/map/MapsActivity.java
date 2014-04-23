@@ -1,13 +1,16 @@
 package com.bnj.indoormap.map;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
 import com.bnj.indoormap.R;
 import com.bnj.indoormap.tileprovider.IndoorTMSTileProvider;
 import com.bnj.indoormap.utils.Constants;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 
 public class MapsActivity extends FragmentActivity {
@@ -46,8 +49,10 @@ public class MapsActivity extends FragmentActivity {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-                    .getMap();
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.map);
+            fragment.setRetainInstance(true);
+            mMap = ((SupportMapFragment) fragment).getMap();
+
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
                 setUpMap();
@@ -66,5 +71,8 @@ public class MapsActivity extends FragmentActivity {
         tileProvider.setBuildingId(getIntent().getStringExtra(Constants.Map.BUILDING_ID_EXTRA_KEY));
         tileProvider.setFloorId(getIntent().getStringExtra(Constants.Map.FLOOR_ID_EXTRA_KEY));
         mMap.addTileOverlay(new TileOverlayOptions().tileProvider(tileProvider));
+        double[] latlng = getIntent().getDoubleArrayExtra(Constants.Map
+                .BUILDING_LOCATION_EXTRA_KEY);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latlng[0], latlng[1]), 17));
     }
 }

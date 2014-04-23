@@ -8,8 +8,6 @@ import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
 import com.bnj.indoormap.floor.FloorFragment;
-import com.bnj.indoormap.map.MapsActivity;
-import com.bnj.indoormap.utils.Constants;
 
 /**
  * An activity representing a single Building detail screen. This activity is
@@ -79,9 +77,6 @@ public class BuildingDetailActivity extends FragmentActivity implements Building
 
     @Override
     public void onFloorSelected(String id) {
-        Intent intent = new Intent(this, MapsActivity.class);
-        intent.putExtra(Constants.Map.BUILDING_ID_EXTRA_KEY, buildingId);
-        intent.putExtra(Constants.Map.FLOOR_ID_EXTRA_KEY, id);
-        startActivity(intent);
+
     }
 }

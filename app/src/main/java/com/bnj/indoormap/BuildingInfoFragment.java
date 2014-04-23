@@ -115,7 +115,7 @@ public class BuildingInfoFragment extends Fragment {
         if (buildingId != null) {
             GetBuildingByIdRequest request = new GetBuildingByIdRequest(buildingId);
             spiceManager.getFromCacheAndLoadFromNetworkIfExpired(request, request.getCacheKey(),
-                    DurationInMillis.ONE_HOUR,
+                    DurationInMillis.ONE_MINUTE,
                     listener);
         }
     }

@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bnj.indoormap.R;
+import com.bnj.indoormap.map.MapsActivity;
 import com.bnj.indoormap.utils.Constants;
 import com.bnj.indoortms.api.client.model.Building;
 import com.bnj.indoortms.api.client.model.Floor;
@@ -104,7 +105,7 @@ public class FloorFragment extends ListFragment {
         super.onViewCreated(view, savedInstanceState);
         GetBuildingByIdRequest request = new GetBuildingByIdRequest(buildingId);
         spiceManager.getFromCacheAndLoadFromNetworkIfExpired(request, request.getCacheKey(),
-                DurationInMillis.ONE_HOUR,
+                DurationInMillis.ONE_MINUTE,
                 floorsRequestListener);
         setEmptyText(getString(R.string.floor_list_empty_text));
     }
@@ -161,6 +162,12 @@ public class FloorFragment extends ListFragment {
             // fragment is attached to one) that an item has been selected.
             mListener.onFloorSelected(adapter.getItem(position).get_id());
         }
+
+        Intent intent = new Intent(getActivity(), MapsActivity.class);
+        intent.putExtra(Constants.Map.BUILDING_ID_EXTRA_KEY, buildingId);
+        intent.putExtra(Constants.Map.FLOOR_ID_EXTRA_KEY, adapter.getItem(position).get_id());
+        intent.putExtra(Constants.Map.BUILDING_LOCATION_EXTRA_KEY, buildingLocation);
+        startActivity(intent);
     }
 
     /**

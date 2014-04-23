@@ -10,7 +10,7 @@ import java.net.URL;
  */
 public class IndoorTMSTileProvider extends UrlTileProvider {
 
-    private static final String TMS_URL = "http://10.66.96.159:8080/%s/%s/%d/%d/%d.png";
+    private static final String TMS_URL = "http://192.168.1.182/%s/%s/%d/%d/%d.png";
     private String buildingId;
     private String floorId;
 
@@ -38,7 +38,7 @@ public class IndoorTMSTileProvider extends UrlTileProvider {
     public URL getTileUrl(int x, int y, int zoom) {
         int reversedY = (1 << zoom) - y - 1;
         try {
-            return new URL(String.format(TMS_URL, buildingId, floorId, x, reversedY, zoom));
+            return new URL(String.format(TMS_URL, buildingId, floorId, zoom, x, reversedY));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

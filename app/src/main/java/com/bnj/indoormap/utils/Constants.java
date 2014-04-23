@@ -80,6 +80,8 @@ public interface Constants {
         public static final String BUILDING_ID_EXTRA_KEY = "com.bnj.indoormap.map.extra" +
                 ".BUILDING_ID";
         public static final String FLOOR_ID_EXTRA_KEY = "com.bnj.indoormap.map.extra.FLOOR_ID";
+        public static final String BUILDING_LOCATION_EXTRA_KEY = "com.bnj.indoormap.map.extra" +
+                ".BUILDING_LOCATION";
     }
 
 }
