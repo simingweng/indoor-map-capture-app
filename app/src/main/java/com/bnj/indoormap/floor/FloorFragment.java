@@ -193,7 +193,7 @@ public class FloorFragment extends ListFragment {
             Floor floor = adapter.getItem(position);
             level.setText("Level " + floor.getLevel());
             ImageLoader.getInstance().displayImage(FloorImageUtil.getInstance().getImageUrl
-                    (buildingId, floor.get_id(), floor.getImage()), image);
+                    (buildingId, floor.getImage()), image);
             return v;
         }
     }

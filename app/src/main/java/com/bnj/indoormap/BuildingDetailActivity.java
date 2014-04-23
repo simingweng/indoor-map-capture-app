@@ -8,6 +8,8 @@ import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
 import com.bnj.indoormap.floor.FloorFragment;
+import com.bnj.indoormap.map.MapsActivity;
+import com.bnj.indoormap.utils.Constants;
 
 /**
  * An activity representing a single Building detail screen. This activity is
@@ -20,6 +22,8 @@ import com.bnj.indoormap.floor.FloorFragment;
  */
 public class BuildingDetailActivity extends FragmentActivity implements BuildingInfoFragment
         .OnBuildingInfoInteractionListener, FloorFragment.OnFloorSelectionListener {
+
+    private String buildingId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +46,12 @@ public class BuildingDetailActivity extends FragmentActivity implements Building
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(BuildingDetailFragment.ARG_BUILDING_ID, getIntent()
-                    .getStringExtra(BuildingDetailFragment.ARG_BUILDING_ID));
+            buildingId = getIntent().getStringExtra(BuildingDetailFragment.ARG_BUILDING_ID);
+            arguments.putString(BuildingDetailFragment.ARG_BUILDING_ID, buildingId);
             BuildingDetailFragment fragment = new BuildingDetailFragment();
             fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.building_detail_container, fragment).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.building_detail_container,
+                    fragment).commit();
         }
     }
 
@@ -62,8 +66,7 @@ public class BuildingDetailActivity extends FragmentActivity implements Building
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-            NavUtils.navigateUpTo(this, new Intent(this,
-                    BuildingListActivity.class));
+            NavUtils.navigateUpTo(this, new Intent(this, BuildingListActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -76,6 +79,9 @@ public class BuildingDetailActivity extends FragmentActivity implements Building
 
     @Override
     public void onFloorSelected(String id) {
-
+        Intent intent = new Intent(this, MapsActivity.class);
+        intent.putExtra(Constants.Map.BUILDING_ID_EXTRA_KEY, buildingId);
+        intent.putExtra(Constants.Map.FLOOR_ID_EXTRA_KEY, id);
+        startActivity(intent);
     }
 }

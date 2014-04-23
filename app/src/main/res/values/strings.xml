@@ -8,9 +8,11 @@
     <string name="add">Add</string>
 
     <plurals name="multiple_selection_subtitle">
-        <item quantity="zero" />
+        <item quantity="zero"/>
         <item quantity="one">1 %s selected</item>
         <item quantity="other">%2$d %1$ss selected</item>
     </plurals>
+
+    <string name="title_activity_maps">Map</string>
 
 </resources>
