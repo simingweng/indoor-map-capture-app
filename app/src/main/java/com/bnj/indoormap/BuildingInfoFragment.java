@@ -34,28 +34,6 @@ public class BuildingInfoFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = BuildingInfoFragment.class.getName();
-    private RequestListener<Building> listener = new RequestListener<Building>() {
-
-        @Override
-        public void onRequestFailure(SpiceException spiceException) {
-            Log.e(TAG, spiceException.getMessage());
-        }
-
-        @Override
-        public void onRequestSuccess(Building building) {
-            TextView name = (TextView) getView().findViewById(R.id.textViewName);
-            name.setText(building.getName());
-            TextView address = (TextView) getView().findViewById(R.id.textViewAddress);
-            address.setText(building.getFormatted_address());
-            ImageView image = (ImageView) getView().findViewById(R.id.imageView);
-            if (building.getLocation() != null) {
-                ImageLoader.getInstance().displayImage(String.format(Constants.GoogleAPI
-                                .GOOGLE_STREETVIEW_IMAGE,
-                        building.getLocation().lat, building.getLocation().lng
-                ), image);
-            }
-        }
-    };
     private static final String ARG_BUILDING_ID = "building_id";
     // TODO: Rename and change types of parameters
     private String buildingId;
@@ -88,7 +66,6 @@ public class BuildingInfoFragment extends Fragment {
         if (getArguments() != null) {
             buildingId = getArguments().getString(ARG_BUILDING_ID);
         }
-        spiceManager.start(getActivity());
     }
 
     @Override
@@ -110,13 +87,40 @@ public class BuildingInfoFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onStart() {
+        super.onStart();
+        spiceManager.start(getActivity());
         if (buildingId != null) {
             GetBuildingByIdRequest request = new GetBuildingByIdRequest(buildingId);
-            spiceManager.getFromCacheAndLoadFromNetworkIfExpired(request, request.getCacheKey(),
-                    DurationInMillis.ONE_MINUTE,
-                    listener);
+            spiceManager.getFromCacheAndLoadFromNetworkIfExpired(request,
+                    request.getCacheKey() + ".info", DurationInMillis.ONE_MINUTE,
+                    new RequestListener<Building>() {
+
+                        @Override
+                        public void onRequestFailure(SpiceException spiceException) {
+                            Log.e(TAG, spiceException.getMessage());
+                        }
+
+                        @Override
+                        public void onRequestSuccess(Building building) {
+                            Log.i(TAG, "request successful for getting detail information of a " +
+                                    "building");
+                            TextView name = (TextView) getView().findViewById(R.id.textViewName);
+                            name.setText(building.getName());
+                            TextView address = (TextView) getView().findViewById(R.id
+                                    .textViewAddress);
+                            address.setText(building.getFormatted_address());
+                            ImageView image = (ImageView) getView().findViewById(R.id.imageView);
+                            if (building.getLocation() != null) {
+                                ImageLoader.getInstance().displayImage(String.format(Constants
+                                                .GoogleAPI
+                                                .GOOGLE_STREETVIEW_IMAGE,
+                                        building.getLocation().lat, building.getLocation().lng
+                                ), image);
+                            }
+                        }
+                    }
+            );
         }
     }
 
@@ -127,9 +131,9 @@ public class BuildingInfoFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
+    public void onStop() {
         spiceManager.shouldStop();
-        super.onDestroy();
+        super.onStop();
     }
 
     /**

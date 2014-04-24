@@ -53,22 +53,6 @@ public class FloorFragment extends ListFragment {
     private double[] buildingLocation;
     private SpiceManager spiceManager = new SpiceManager(GsonGoogleHttpClientSpiceService.class);
     private FloorsArrayAdapter adapter;
-    private RequestListener<Building> floorsRequestListener = new RequestListener<Building>() {
-
-        @Override
-        public void onRequestFailure(SpiceException spiceException) {
-            Log.e(TAG, "failed to retrieve the floor list for building " + buildingId);
-        }
-
-        @Override
-        public void onRequestSuccess(Building building) {
-            buildingLocation = new double[]{building.getLocation().lat, building.getLocation().lng};
-            if (adapter != null) {
-                adapter.clear();
-                adapter.addAll(building.getFloors());
-            }
-        }
-    };
     private OnFloorSelectionListener mListener;
 
     /**
@@ -90,7 +74,6 @@ public class FloorFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        spiceManager.start(getActivity());
         if (getArguments() != null) {
             buildingId = getArguments().getString(ARG_BUILDING_ID);
         }
@@ -103,10 +86,6 @@ public class FloorFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        GetBuildingByIdRequest request = new GetBuildingByIdRequest(buildingId);
-        spiceManager.getFromCacheAndLoadFromNetworkIfExpired(request, request.getCacheKey(),
-                DurationInMillis.ONE_MINUTE,
-                floorsRequestListener);
         setEmptyText(getString(R.string.floor_list_empty_text));
     }
 
@@ -142,15 +121,42 @@ public class FloorFragment extends ListFragment {
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void onStart() {
+        super.onStart();
+        spiceManager.start(getActivity());
+        GetBuildingByIdRequest request = new GetBuildingByIdRequest(buildingId);
+        spiceManager.getFromCacheAndLoadFromNetworkIfExpired(request,
+                request.getCacheKey() + ".floors", DurationInMillis.ONE_MINUTE,
+                new RequestListener<Building>() {
+
+                    @Override
+                    public void onRequestFailure(SpiceException spiceException) {
+                        Log.e(TAG, "failed to retrieve the floor list for building " + buildingId);
+                    }
+
+                    @Override
+                    public void onRequestSuccess(Building building) {
+                        buildingLocation = new double[]{building.getLocation().lat,
+                                building.getLocation().lng};
+                        if (adapter != null) {
+                            adapter.clear();
+                            adapter.addAll(building.getFloors());
+                        }
+                    }
+                }
+        );
     }
 
     @Override
-    public void onDestroy() {
+    public void onStop() {
         spiceManager.shouldStop();
-        super.onDestroy();
+        super.onStop();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     @Override
