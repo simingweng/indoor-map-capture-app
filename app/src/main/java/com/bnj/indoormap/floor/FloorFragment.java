@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -41,7 +43,7 @@ import java.util.List;
  * .FloorFragment.OnFloorSelectionListener}
  * interface.
  */
-public class FloorFragment extends ListFragment {
+public class FloorFragment extends ListFragment implements AbsListView.MultiChoiceModeListener {
 
     private static final String TAG = FloorFragment.class.getName();
     // TODO: Rename parameter arguments, choose names that match
@@ -54,6 +56,7 @@ public class FloorFragment extends ListFragment {
     private SpiceManager spiceManager = new SpiceManager(GsonGoogleHttpClientSpiceService.class);
     private FloorsArrayAdapter adapter;
     private OnFloorSelectionListener mListener;
+    private MenuItem editMenuItem;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -87,6 +90,8 @@ public class FloorFragment extends ListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setEmptyText(getString(R.string.floor_list_empty_text));
+        getListView().setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+        getListView().setMultiChoiceModeListener(this);
     }
 
     @Override
@@ -174,6 +179,55 @@ public class FloorFragment extends ListFragment {
         intent.putExtra(Constants.Map.FLOOR_ID_EXTRA_KEY, adapter.getItem(position).get_id());
         intent.putExtra(Constants.Map.BUILDING_LOCATION_EXTRA_KEY, buildingLocation);
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+        editMenuItem.setVisible(getListView().getCheckedItemCount() == 1);
+        final int checkedCount = getListView().getCheckedItemCount();
+        mode.setSubtitle(getResources().getQuantityString(
+                R.plurals.multiple_selection_subtitle, checkedCount,
+                "floor", checkedCount));
+    }
+
+    @Override
+    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        mode.getMenuInflater().inflate(R.menu.floor_list_contextual_options, menu);
+        editMenuItem = menu.findItem(R.id.edit);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        return false;
+    }
+
+    @Override
+    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.delete:
+                deleteSelectedFloors();
+                break;
+
+            case R.id.edit:
+                editSelectedFloor(adapter.getItem(getListView().getCheckedItemPosition()));
+                break;
+        }
+        mode.finish();
+        return false;
+    }
+
+    private void editSelectedFloor(Floor floor) {
+
+    }
+
+    private void deleteSelectedFloors() {
+
+    }
+
+    @Override
+    public void onDestroyActionMode(ActionMode mode) {
+        editMenuItem = null;
     }
 
     /**

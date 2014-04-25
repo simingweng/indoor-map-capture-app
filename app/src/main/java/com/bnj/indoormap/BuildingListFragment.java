@@ -333,7 +333,6 @@ public class BuildingListFragment extends ListFragment implements Reloadable,
             Log.i(TAG, "load buildings with a user token");
             mPullToRefreshLayout.setRefreshing(true);
             setEmptyText(getString(R.string.empty_buildings));
-            //addMenuItem.setVisible(true);
             GetBuildingsRequest request = new GetBuildingsRequest(username,
                     usertoken);
             long expiry = forceNetwork ? DurationInMillis.ALWAYS_EXPIRED

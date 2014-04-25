@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -62,6 +64,7 @@ public class NewFloorFragment extends Fragment {
     private Uri image;
     private Button geoReferenceButton;
     private MenuItem saveMenuItem;
+    private EditText editTextName;
     private double[] gcps = new double[0];
     private SpiceManager spiceManager = new SpiceManager(GsonGoogleHttpClientSpiceService.class);
 
@@ -116,6 +119,23 @@ public class NewFloorFragment extends Fragment {
                     (ImageView) getView().findViewById(R.id.imageView));
             geoReferenceButton.setEnabled(true);
         }
+        editTextName = (EditText) view.findViewById(R.id.editTextName);
+        editTextName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                saveMenuItem.setVisible(s.toString().length() > 0 && image != null);
+            }
+        });
     }
 
     @Override
@@ -177,7 +197,7 @@ public class NewFloorFragment extends Fragment {
                 if (resultCode == Activity.RESULT_OK) {
                     image = data.getData();
                     geoReferenceButton.setEnabled(true);
-                    saveMenuItem.setVisible(true);
+                    saveMenuItem.setVisible(editTextName.getText().toString().length() > 0);
                     ImageLoader.getInstance().displayImage(image.toString(),
                             (ImageView) getView().findViewById(R.id.imageView));
                 }

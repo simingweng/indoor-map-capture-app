@@ -6,6 +6,7 @@
     <string name="title_building_detail">Building Detail</string>
     <string name="delete">Delete</string>
     <string name="add">Add</string>
+    <string name="edit">Edit</string>
 
     <plurals name="multiple_selection_subtitle">
         <item quantity="zero"/>
