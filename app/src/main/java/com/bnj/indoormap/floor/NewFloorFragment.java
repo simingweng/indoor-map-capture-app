@@ -26,9 +26,7 @@ import com.bnj.indoormap.R;
 import com.bnj.indoormap.utils.Constants;
 import com.bnj.indoortms.api.client.model.Floor;
 import com.bnj.indoortms.api.client.model.GCP;
-import com.bnj.indoortms.api.client.model.UploadedFile;
 import com.bnj.indoortms.api.client.request.CreateFloorRequest;
-import com.bnj.indoortms.api.client.request.UploadFileRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.octo.android.robospice.GsonGoogleHttpClientSpiceService;
 import com.octo.android.robospice.SpiceManager;
@@ -65,38 +63,6 @@ public class NewFloorFragment extends Fragment {
     private Button geoReferenceButton;
     private MenuItem saveMenuItem;
     private double[] gcps = new double[0];
-    private RequestListener<UploadedFile> uploadFileRequestListener = new
-            RequestListener<UploadedFile>() {
-                @Override
-                public void onRequestFailure(SpiceException spiceException) {
-
-                }
-
-                @Override
-                public void onRequestSuccess(UploadedFile uploadedFile) {
-                    Floor newFloor = new Floor();
-                    newFloor.setImage(uploadedFile.getPath());
-                    newFloor.setName(((EditText) getView().findViewById(R.id.editTextName))
-                            .getText()
-                            .toString());
-                    GCP[] gcpArray = new GCP[gcps.length / 4];
-                    double[] gcpContent = new double[4];
-                    for (int i = 0; i < gcps.length; i++) {
-                        gcpContent[i % 4] = gcps[i];
-                        if ((i + 1) % 4 == 0) {
-                            GCP gcp = new GCP();
-                            gcp.x = gcpContent[0];
-                            gcp.y = gcpContent[1];
-                            gcp.lat = gcpContent[2];
-                            gcp.lng = gcpContent[3];
-                            gcpArray[i / 4] = gcp;
-                        }
-                    }
-                    newFloor.setGcps(gcpArray);
-                    CreateFloorRequest request = new CreateFloorRequest(buildingId, newFloor);
-                    spiceManager.execute(request, newFloorRequestListener);
-                }
-            };
     private SpiceManager spiceManager = new SpiceManager(GsonGoogleHttpClientSpiceService.class);
 
     public NewFloorFragment() {
@@ -177,8 +143,27 @@ public class NewFloorFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                UploadFileRequest request = new UploadFileRequest(getAbsolutePathByUri(image));
-                spiceManager.execute(request, uploadFileRequestListener);
+                Floor newFloor = new Floor();
+                newFloor.setName(((EditText) getView().findViewById(R.id.editTextName))
+                        .getText()
+                        .toString());
+                GCP[] gcpArray = new GCP[gcps.length / 4];
+                double[] gcpContent = new double[4];
+                for (int i = 0; i < gcps.length; i++) {
+                    gcpContent[i % 4] = gcps[i];
+                    if ((i + 1) % 4 == 0) {
+                        GCP gcp = new GCP();
+                        gcp.x = gcpContent[0];
+                        gcp.y = gcpContent[1];
+                        gcp.lat = gcpContent[2];
+                        gcp.lng = gcpContent[3];
+                        gcpArray[i / 4] = gcp;
+                    }
+                }
+                newFloor.setGcps(gcpArray);
+                CreateFloorRequest request = new CreateFloorRequest(buildingId, newFloor,
+                        getAbsolutePathByUri(image));
+                spiceManager.execute(request, newFloorRequestListener);
                 break;
         }
         return super.onOptionsItemSelected(item);
