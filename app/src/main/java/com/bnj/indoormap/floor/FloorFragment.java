@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +24,7 @@ import com.bnj.indoormap.map.MapsActivity;
 import com.bnj.indoormap.utils.Constants;
 import com.bnj.indoortms.api.client.model.Building;
 import com.bnj.indoortms.api.client.model.Floor;
+import com.bnj.indoortms.api.client.request.DeleteFloorRequest;
 import com.bnj.indoortms.api.client.request.GetBuildingByIdRequest;
 import com.bnj.indoortms.api.client.utils.FloorImageUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -222,7 +224,24 @@ public class FloorFragment extends ListFragment implements AbsListView.MultiChoi
     }
 
     private void deleteSelectedFloors() {
+        SparseBooleanArray checkedItemPositions = getListView().getCheckedItemPositions();
+        for (int i = checkedItemPositions.size() - 1; i >= 0; i--) {
+            Floor floor = adapter.getItem(checkedItemPositions.keyAt(i));
+            DeleteFloorRequest request = new DeleteFloorRequest(buildingId, floor.get_id());
+            spiceManager.execute(request, new RequestListener<Floor>() {
+                @Override
+                public void onRequestFailure(SpiceException spiceException) {
 
+                }
+
+                @Override
+                public void onRequestSuccess(Floor floor) {
+                    spiceManager.removeDataFromCache(Building.class, "building." + buildingId + "" +
+                            ".floors");
+                    adapter.remove(floor);
+                }
+            });
+        }
     }
 
     @Override
